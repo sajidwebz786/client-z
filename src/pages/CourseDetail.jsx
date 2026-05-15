@@ -5,7 +5,7 @@ import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { courseDetails, getCourseImage, sourceCourses, useCourseImageFallback } from '../data/sourceContent';
+import { courseDetails, getCourseImage, sourceCourses, useCourseImageError } from '../data/sourceContent';
 
 const CourseDetail = () => {
   const { slug } = useParams();
@@ -84,7 +84,7 @@ const CourseDetail = () => {
             </div>
 
             <div className="card" style={{ padding: 20, position: 'sticky', top: 96 }}>
-              <img src={getCourseImage(data.thumbnail_url)} alt={data.title} onError={useCourseImageFallback} style={{ width: '100%', height: 180, objectFit: 'cover', objectPosition: 'top', borderRadius: 12, marginBottom: 16 }} />
+              <img src={getCourseImage(data.thumbnail_url, data.slug)} alt={data.title} onError={(event) => useCourseImageError(event, data.slug)} style={{ width: '100%', height: 180, objectFit: 'contain', objectPosition: 'center', borderRadius: 12, marginBottom: 16, background: '#fff' }} />
               <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--green-400)', marginBottom: 16 }}>₹{data.price.toLocaleString('en-IN')}</div>
               <button className="btn btn-primary" style={{ width: '100%' }} onClick={handleEnroll}>
                 <FaLock /> Enroll Now

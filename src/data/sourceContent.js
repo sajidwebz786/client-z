@@ -1,17 +1,26 @@
-import studentPassImage from '../assets/zulanex-student-pass.jpeg';
+import trialPassImage from '../assets/course-images/trial-pass.png';
+import careerBoostImage from '../assets/course-images/career-boost.png';
+import eliteSuccessImage from '../assets/course-images/elite-success-pro.png';
+import aiBootcampImage from '../assets/course-images/ai-job-ready-bootcamp.png';
 
-export const courseFallbackImage = studentPassImage;
+export const courseImagesBySlug = {
+  'trial-pass': trialPassImage,
+  'career-boost': careerBoostImage,
+  'elite-success-pro': eliteSuccessImage,
+  'ai-job-ready-bootcamp': aiBootcampImage,
+};
 
-export const getCourseImage = (thumbnailUrl) => {
-  if (!thumbnailUrl || thumbnailUrl.includes('/src/assets/')) {
-    return courseFallbackImage;
+export const getCourseImage = (thumbnailUrl, slug) => {
+  if (slug && courseImagesBySlug[slug]) {
+    return courseImagesBySlug[slug];
   }
   return thumbnailUrl;
 };
 
-export const useCourseImageFallback = (event) => {
-  if (event.currentTarget.src !== courseFallbackImage) {
-    event.currentTarget.src = courseFallbackImage;
+export const useCourseImageError = (event, slug) => {
+  const courseImage = courseImagesBySlug[slug];
+  if (courseImage && event.currentTarget.src !== courseImage) {
+    event.currentTarget.src = courseImage;
   }
 };
 
@@ -28,7 +37,7 @@ export const sourceCourses = [
     level: 'Trial',
     price: 99,
     original_price: null,
-    thumbnail_url: studentPassImage,
+    thumbnail_url: trialPassImage,
   },
   {
     id: 2,
@@ -42,7 +51,7 @@ export const sourceCourses = [
     level: 'Job Ready',
     price: 3999,
     original_price: null,
-    thumbnail_url: studentPassImage,
+    thumbnail_url: careerBoostImage,
   },
   {
     id: 3,
@@ -56,7 +65,7 @@ export const sourceCourses = [
     level: 'Advanced',
     price: 5999,
     original_price: null,
-    thumbnail_url: studentPassImage,
+    thumbnail_url: eliteSuccessImage,
   },
   {
     id: 4,
@@ -70,7 +79,7 @@ export const sourceCourses = [
     level: 'Job Ready',
     price: 99,
     original_price: null,
-    thumbnail_url: studentPassImage,
+    thumbnail_url: aiBootcampImage,
   },
 ];
 

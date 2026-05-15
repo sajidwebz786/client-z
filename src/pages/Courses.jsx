@@ -7,7 +7,7 @@ import {
 import api from '../api/axios';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { getCourseImage, sourceCategories, sourceCourses, sourceTrainingSections, useCourseImageFallback } from '../data/sourceContent';
+import { getCourseImage, sourceCategories, sourceCourses, sourceTrainingSections, useCourseImageError } from '../data/sourceContent';
 
 const supportedSlugs = new Set(sourceCourses.map((course) => course.slug));
 
@@ -89,9 +89,9 @@ const Courses = () => {
     >
       <div className="card-image">
         <img
-          src={getCourseImage(course.thumbnail_url)}
+          src={getCourseImage(course.thumbnail_url, course.slug)}
           alt={course.title}
-          onError={useCourseImageFallback}
+          onError={(event) => useCourseImageError(event, course.slug)}
         />
         <div className="card-badge">{course.category_name || 'Course'}</div>
       </div>
