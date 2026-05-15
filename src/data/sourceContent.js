@@ -1,3 +1,5 @@
+import studentPassImage from '../assets/zulanex-student-pass.jpeg';
+
 export const sourceCourses = [
   {
     id: 1,
@@ -11,7 +13,7 @@ export const sourceCourses = [
     level: 'Trial',
     price: 99,
     original_price: null,
-    thumbnail_url: '/src/assets/zulanex-student-pass.jpeg',
+    thumbnail_url: studentPassImage,
   },
   {
     id: 2,
@@ -25,7 +27,7 @@ export const sourceCourses = [
     level: 'Job Ready',
     price: 3999,
     original_price: null,
-    thumbnail_url: '/src/assets/zulanex-student-pass.jpeg',
+    thumbnail_url: studentPassImage,
   },
   {
     id: 3,
@@ -39,7 +41,7 @@ export const sourceCourses = [
     level: 'Advanced',
     price: 5999,
     original_price: null,
-    thumbnail_url: '/src/assets/zulanex-student-pass.jpeg',
+    thumbnail_url: studentPassImage,
   },
   {
     id: 4,
@@ -53,7 +55,7 @@ export const sourceCourses = [
     level: 'Job Ready',
     price: 99,
     original_price: null,
-    thumbnail_url: '/src/assets/zulanex-student-pass.jpeg',
+    thumbnail_url: studentPassImage,
   },
 ];
 

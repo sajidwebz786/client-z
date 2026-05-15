@@ -13,7 +13,7 @@ const Navbar = () => {
   const [hoveredCat, setHoveredCat] = useState(null);
   const [categories, setCategories] = useState([]);
   const [coursesByCategory, setCoursesByCategory] = useState({});
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
   const { user, isAuthenticated, logout } = useAuth();
   const location = useLocation();
   const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
@@ -23,7 +23,10 @@ const Navbar = () => {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark');
+  const toggleTheme = () => {
+    localStorage.setItem('themePreferenceSet', 'true');
+    setTheme(t => t === 'dark' ? 'light' : 'dark');
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);

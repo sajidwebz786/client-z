@@ -25,7 +25,7 @@ function App() {
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme="dark"
+          theme="light"
         />
         <Routes>
           <Route path="/" element={<Home />} />

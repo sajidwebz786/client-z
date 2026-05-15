@@ -95,7 +95,7 @@ const Register = () => {
   return (
     <>
       <Navbar />
-      <ToastContainer position="top-right" theme="dark" />
+      <ToastContainer position="top-right" theme="light" />
       <div style={styles.page}>
         <div style={styles.bgOrb1}></div>
         <div style={styles.bgOrb2}></div>
