@@ -83,7 +83,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className={`navbar ${scrolled ? 'scrolled' : ''} ${isAuthPage ? 'auth-navbar' : ''}`}>
+      <nav className={`navbar ${scrolled ? 'scrolled' : ''} ${isAuthPage ? 'auth-navbar' : ''} ${mobileOpen ? 'mobile-open' : ''}`}>
         <div className="container">
           <Link to="/" className="nav-brand">
             <Logo />

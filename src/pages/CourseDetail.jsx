@@ -70,8 +70,8 @@ const CourseDetail = () => {
             <span style={{ color: 'var(--blue-300)', fontSize: '0.85rem', fontWeight: 700 }}>{data.title}</span>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr minmax(280px, 360px)', gap: 32, alignItems: 'start' }}>
-            <div>
+          <div className="course-detail-hero-grid">
+            <div className="course-detail-copy">
               <div className="badge badge-primary" style={{ marginBottom: 14 }}>{data.category_name}</div>
               <h1 style={{ marginBottom: 12 }}>{data.title}</h1>
               <p style={{ maxWidth: 760, color: 'var(--text-secondary)' }}>{data.desc}</p>
@@ -83,7 +83,7 @@ const CourseDetail = () => {
               </div>
             </div>
 
-            <div className="card" style={{ padding: 20, position: 'sticky', top: 96 }}>
+            <div className="card course-detail-purchase-card">
               <img src={getCourseImage(data.thumbnail_url, data.slug)} alt={data.title} onError={(event) => useCourseImageError(event, data.slug)} style={{ width: '100%', height: 180, objectFit: 'contain', objectPosition: 'center', borderRadius: 12, marginBottom: 16, background: '#fff' }} />
               <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--green-400)', marginBottom: 16 }}>₹{data.price.toLocaleString('en-IN')}</div>
               <button className="btn btn-primary" style={{ width: '100%' }} onClick={handleEnroll}>

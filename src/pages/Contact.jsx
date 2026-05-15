@@ -138,7 +138,7 @@ const Contact = () => {
                 Fill out the form below and our team will get back to you within 24 hours.
               </p>
               <form onSubmit={handleSubmit}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="form-row-grid">
                   <div className="form-group">
                     <label htmlFor="name">Full Name</label>
                     <input
@@ -166,7 +166,7 @@ const Contact = () => {
                     />
                   </div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="form-row-grid">
                   <div className="form-group">
                     <label htmlFor="phone">Phone Number</label>
                     <input

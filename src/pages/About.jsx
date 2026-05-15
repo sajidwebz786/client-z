@@ -137,8 +137,8 @@ const About = () => {
 
       <section className="section">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center' }}>
-            <div style={{ animation: 'fadeInUp 0.8s ease' }}>
+          <div className="split-media-grid about-story-grid">
+            <div className="split-content" style={{ animation: 'fadeInUp 0.8s ease' }}>
               <h2 style={{ marginBottom: '20px' }}>Our <span className="gradient-text">Story</span></h2>
               <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.8, marginBottom: '16px' }}>
                 Zulanex is presented in the source materials as an affordable, practical, job-focused learning platform for real learning and real success.
@@ -164,12 +164,12 @@ const About = () => {
                 </div>
               </div>
             </div>
-            <div style={{ animation: 'fadeInUp 0.8s ease 0.2s both' }}>
-              <div style={{ position: 'relative', borderRadius: 'var(--radius-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-lg)' }}>
+            <div className="split-media" style={{ animation: 'fadeInUp 0.8s ease 0.2s both' }}>
+              <div className="responsive-media-card">
                 <img
                   src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800"
                   alt="About Zulanex"
-                  style={{ width: '100%', height: '450px', objectFit: 'cover' }}
+                  className="responsive-media-image"
                 />
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(25,118,210,0.3) 0%, rgba(0,200,83,0.2) 100%)' }}></div>
               </div>
