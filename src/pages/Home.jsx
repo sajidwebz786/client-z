@@ -160,7 +160,7 @@ const Home = () => {
         </div>
 
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', alignItems: 'center' }}>
+          <div className="hero-grid">
             <div className="hero-content" style={{ animation: 'fadeInUp 0.8s ease' }}>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'linear-gradient(135deg, rgba(5,7,13,0.94), rgba(6,27,104,0.92))', padding: '7px 16px', borderRadius: 'var(--radius-full)', marginBottom: '16px', border: '1px solid rgba(120,222,242,0.5)', boxShadow: '0 12px 30px rgba(0,0,0,0.32), 0 0 0 1px rgba(255,255,255,0.05)' }}>
                 <FaPlay style={{ color: 'var(--green-300)', fontSize: '0.6rem' }} />
@@ -184,15 +184,15 @@ const Home = () => {
               </div>
             </div>
             <div className="hero-image" style={{ animation: 'fadeInUp 0.8s ease 0.2s both' }}>
-              <div style={{ position: 'relative', borderRadius: 'var(--radius-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-lg)' }}>
+              <div className="hero-image-card">
                 <img
                   src={heroImage}
                   alt="Zulanex Student Pass"
-                  style={{ width: '100%', height: '420px', objectFit: 'cover', objectPosition: 'top' }}
+                  className="hero-main-image"
                 />
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(25,118,210,0.3) 0%, rgba(0,200,83,0.2) 100%)' }}></div>
-                <div style={{ position: 'absolute', bottom: '24px', left: '24px', right: '24px' }} className="glass" >
-                  <div style={{ padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div className="glass hero-image-caption">
+                  <div className="hero-image-caption-inner">
                     <div>
                       <div style={{ fontWeight: 600, fontSize: '0.95rem' }}>Zulanex Student Pass</div>
                       <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>Trial &bull; Career Boost &bull; Elite</div>

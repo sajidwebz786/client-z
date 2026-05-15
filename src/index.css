@@ -226,7 +226,12 @@ select.form-control { cursor: pointer; }
 .hero-content h1 { margin-bottom: 20px; }
 .hero-content p { font-size: 1.15rem; margin-bottom: 32px; }
 .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: center; }
 .hero-image { position: relative; z-index: 2; }
+.hero-image-card { position: relative; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); }
+.hero-main-image { width: 100%; height: 420px; object-fit: cover; object-position: top; display: block; }
+.hero-image-caption { position: absolute; bottom: 24px; left: 24px; right: 24px; }
+.hero-image-caption-inner { padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .hero-bg-shapes { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .hero-bg-shapes .shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.3; }
 .hero-bg-shapes .shape-1 { width: 400px; height: 400px; background: var(--blue-700); top: -100px; right: -100px; }
@@ -484,6 +489,13 @@ tr:hover td { background: rgba(25,118,210,0.05); }
 
 @media (max-width: 768px) {
   .section { padding: 48px 0; }
+  .hero-section { padding: 96px 0 56px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 28px; }
+  .hero-image { order: 1; }
+  .hero-content { order: 2; }
+  .hero-main-image { height: auto; max-height: 380px; object-fit: contain; background: #fff; }
+  .hero-image-caption { left: 12px; right: 12px; bottom: 12px; }
+  .hero-image-caption-inner { padding: 12px; }
   .hero-content { text-align: center; }
   .hero-buttons { justify-content: center; }
   .nav-links { display: none; }
@@ -496,6 +508,13 @@ tr:hover td { background: rgba(25,118,210,0.05); }
 @media (max-width: 480px) {
   html { font-size: 14px; }
   .container { padding: 0 16px; }
+  .hero-section { padding: 88px 0 48px; }
+  .hero-grid { gap: 24px; }
+  .hero-image-card { border-radius: 18px; }
+  .hero-main-image { max-height: 320px; }
+  .hero-image-caption { position: static; border-left: 0; border-right: 0; border-bottom: 0; border-radius: 0; }
+  .hero-image-caption-inner { justify-content: center; text-align: center; }
+  .hero-image-caption-inner .btn { display: none; }
   .hero-buttons { flex-direction: column; }
   .hero-buttons .btn { width: 100%; }
   .auth-card { padding: 24px; }
