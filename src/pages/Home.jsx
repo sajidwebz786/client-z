@@ -12,7 +12,7 @@ import Logo from '../components/Logo';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import heroImage from '../assets/zulanex-student-pass.jpeg';
-import { sourceCourses, sourceTrainingSections } from '../data/sourceContent';
+import { getCourseImage, sourceCourses, sourceTrainingSections, useCourseImageFallback } from '../data/sourceContent';
 
 
 const categories = [
@@ -230,7 +230,7 @@ const Home = () => {
             {courses.map((course, i) => (
               <div key={course.id || i} className="course-card" style={{ animation: `fadeInUp 0.6s ease ${i * 0.1}s both` }}>
                 <div className="card-image">
-                  <img src={course.thumbnail_url || sourceCourses[0].thumbnail_url} alt={course.title} />
+                  <img src={getCourseImage(course.thumbnail_url)} alt={course.title} onError={useCourseImageFallback} />
                   <div className="card-badge">{course.category_name || 'Featured'}</div>
                 </div>
                 <div className="card-body">

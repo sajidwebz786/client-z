@@ -1,5 +1,20 @@
 import studentPassImage from '../assets/zulanex-student-pass.jpeg';
 
+export const courseFallbackImage = studentPassImage;
+
+export const getCourseImage = (thumbnailUrl) => {
+  if (!thumbnailUrl || thumbnailUrl.includes('/src/assets/')) {
+    return courseFallbackImage;
+  }
+  return thumbnailUrl;
+};
+
+export const useCourseImageFallback = (event) => {
+  if (event.currentTarget.src !== courseFallbackImage) {
+    event.currentTarget.src = courseFallbackImage;
+  }
+};
+
 export const sourceCourses = [
   {
     id: 1,
