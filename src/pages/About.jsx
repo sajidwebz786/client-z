@@ -67,10 +67,10 @@ const About = () => {
   }, []);
 
   const statsData = stats ? [
-    { icon: FaUsers, value: '1 Crore', label: 'Learners' },
-    { icon: FaBook, value: '100+', label: 'Top MNCs' },
-    { icon: FaChalkboardTeacher, value: '300+', label: 'Training Experts' },
-    { icon: FaChartLine, value: '2500+', label: 'Start Ups' },
+    { icon: FaUsers, value: '500+', label: 'Learners' },
+    { icon: FaBook, value: '25+', label: 'Hiring Partners' },
+    { icon: FaChalkboardTeacher, value: '40+', label: 'Training Experts' },
+    { icon: FaChartLine, value: '80+', label: 'Project Tracks' },
   ] : [];
 
   if (loading) {
@@ -151,15 +151,15 @@ const About = () => {
               </p>
               <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--blue-400)', fontFamily: 'var(--font-primary)' }}>1 Crore</div>
+                  <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--blue-400)', fontFamily: 'var(--font-primary)' }}>500+</div>
                   <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Learners</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--green-400)', fontFamily: 'var(--font-primary)' }}>100+</div>
-                  <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Top MNCs</div>
+                  <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--green-400)', fontFamily: 'var(--font-primary)' }}>25+</div>
+                  <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Hiring Partners</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '2rem', fontWeight: 800, color: '#ffd54f', fontFamily: 'var(--font-primary)' }}>300+</div>
+                  <div style={{ fontSize: '2rem', fontWeight: 800, color: '#ffd54f', fontFamily: 'var(--font-primary)' }}>40+</div>
                   <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Training Experts</div>
                 </div>
               </div>

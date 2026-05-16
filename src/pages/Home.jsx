@@ -129,10 +129,10 @@ const Home = () => {
   };
 
   const statsData = stats ? [
-    { icon: FaGraduationCap, value: '1 Crore', label: 'Learners' },
-    { icon: FaBook, value: '100+', label: 'Top MNCs' },
-    { icon: FaChalkboardTeacher, value: '300+', label: 'Training Experts' },
-    { icon: FaChartLine, value: '2500+', label: 'Start Ups' },
+    { icon: FaGraduationCap, value: '500+', label: 'Learners' },
+    { icon: FaBook, value: '25+', label: 'Hiring Partners' },
+    { icon: FaChalkboardTeacher, value: '40+', label: 'Training Experts' },
+    { icon: FaChartLine, value: '80+', label: 'Project Tracks' },
   ] : [];
 
   if (loading) {
