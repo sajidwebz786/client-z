@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { FaArrowRight, FaCheck, FaClock, FaGraduationCap, FaHome, FaLock, FaStar, FaUsers } from 'react-icons/fa';
 import { toast } from 'react-toastify';
@@ -11,7 +12,54 @@ const CourseDetail = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-  const data = courseDetails[slug?.toLowerCase().trim()];
+  const normalizedSlug = slug?.toLowerCase().trim();
+  const sourceData = courseDetails[normalizedSlug];
+  const [courseData, setCourseData] = useState(null);
+  const [apiRelatedCourses, setApiRelatedCourses] = useState([]);
+  const [loading, setLoading] = useState(Boolean(sourceData));
+
+  useEffect(() => {
+    let active = true;
+
+    const fetchCourse = async () => {
+      if (!sourceData) return;
+      setLoading(true);
+      try {
+        const response = await api.get(`/courses/${normalizedSlug}`);
+        if (!active) return;
+        setCourseData(response.data.course || null);
+        setApiRelatedCourses(response.data.relatedCourses || []);
+      } catch {
+        if (active) {
+          setCourseData(null);
+          setApiRelatedCourses([]);
+        }
+      } finally {
+        if (active) setLoading(false);
+      }
+    };
+
+    fetchCourse();
+    return () => {
+      active = false;
+    };
+  }, [normalizedSlug, sourceData]);
+
+  const data = useMemo(() => {
+    if (!sourceData && !courseData) return null;
+    return {
+      ...sourceData,
+      ...courseData,
+      desc: sourceData?.desc || courseData?.full_description || courseData?.short_description,
+      curriculum: sourceData?.curriculum || [],
+      outcomes: sourceData?.outcomes || [],
+      tools: sourceData?.tools || [],
+      thumbnail_url: courseData?.thumbnail_url || sourceData?.thumbnail_url,
+      category_name: courseData?.category_name || sourceData?.category_name,
+      price: Number(courseData?.price ?? sourceData?.price ?? 0),
+      original_price: courseData?.original_price ?? sourceData?.original_price,
+    };
+  }, [courseData, sourceData]);
 
   if (!data) {
     return (
@@ -55,83 +103,95 @@ const CourseDetail = () => {
     }
   };
 
-  const relatedCourses = sourceCourses.filter((course) => course.slug !== data.slug).slice(0, 3);
+  const relatedCourses = (apiRelatedCourses.length > 0 ? apiRelatedCourses : sourceCourses)
+    .filter((course) => course.slug !== data.slug)
+    .slice(0, 3);
+  const featureGroups = [
+    ['What You Get', data.curriculum],
+    ['Learning Outcomes', data.outcomes],
+    ['Included Support', data.tools],
+  ].filter(([, items]) => items.length > 0);
 
   return (
     <>
       <Navbar />
-      <section style={{ background: 'var(--gradient-hero)', padding: '120px 0 56px' }}>
-        <div className="container">
-          <div style={{ display: 'flex', gap: 8, marginBottom: 16, alignItems: 'center', flexWrap: 'wrap' }}>
-            <Link to="/" style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: 4 }}><FaHome /> Home</Link>
-            <span style={{ color: 'var(--text-muted)' }}>/</span>
-            <Link to="/courses" style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>Courses</Link>
-            <span style={{ color: 'var(--text-muted)' }}>/</span>
-            <span style={{ color: 'var(--blue-300)', fontSize: '0.85rem', fontWeight: 700 }}>{data.title}</span>
+      <section className="course-focus-page">
+        <div className="container course-focus-container">
+          <div className="course-focus-breadcrumb">
+            <Link to="/"><FaHome /> Home</Link>
+            <span>/</span>
+            <Link to="/courses">Courses</Link>
+            <span>/</span>
+            <strong>{data.title}</strong>
           </div>
 
-          <div className="course-detail-hero-grid">
-            <div className="course-detail-copy">
-              <div className="badge badge-primary" style={{ marginBottom: 14 }}>{data.category_name}</div>
-              <h1 style={{ marginBottom: 12 }}>{data.title}</h1>
-              <p style={{ maxWidth: 760, color: 'var(--text-secondary)' }}>{data.desc}</p>
-              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 20 }}>
+          <div className="course-focus-shell">
+            <div className="course-focus-copy">
+              <div className="badge badge-primary">{data.category_name}</div>
+              <h1>{data.title}</h1>
+              <p>{data.desc}</p>
+
+              <div className="course-focus-chips">
                 <span className="detail-chip"><FaStar /> {data.rating}</span>
                 <span className="detail-chip"><FaClock /> {data.duration}</span>
                 <span className="detail-chip"><FaGraduationCap /> {data.level}</span>
                 <span className="detail-chip"><FaUsers /> Zulanex learners</span>
               </div>
-            </div>
 
-            <div className="card course-detail-purchase-card">
-              <img src={getCourseImage(data.thumbnail_url, data.slug)} alt={data.title} onError={(event) => useCourseImageError(event, data.slug)} style={{ width: '100%', height: 180, objectFit: 'contain', objectPosition: 'center', borderRadius: 12, marginBottom: 16, background: '#fff' }} />
-              <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--green-400)', marginBottom: 16 }}>₹{data.price.toLocaleString('en-IN')}</div>
-              <button className="btn btn-primary" style={{ width: '100%' }} onClick={handleEnroll}>
-                <FaLock /> Enroll Now
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container">
-          <div className="grid grid-3">
-            {[
-              ['What You Get', data.curriculum],
-              ['Learning Outcomes', data.outcomes],
-              ['Included Support', data.tools],
-            ].map(([title, items]) => (
-              <div className="card" style={{ padding: 24 }} key={title}>
-                <h3 style={{ marginBottom: 18 }}>{title}</h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                  {items.map((item) => (
-                    <div key={item} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', color: 'var(--text-secondary)' }}>
-                      <FaCheck style={{ color: 'var(--green-400)', marginTop: 5, flexShrink: 0 }} />
-                      <span>{item}</span>
+              <div className="course-focus-info-grid">
+                {featureGroups.map(([title, items]) => (
+                  <div className="course-focus-info-card" key={title}>
+                    <h3>{title}</h3>
+                    <div className="course-focus-list">
+                      {items.slice(0, 5).map((item) => (
+                        <div key={item}>
+                          <FaCheck />
+                          <span>{item}</span>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            <aside className="course-focus-offer">
+              <div className="course-focus-image-wrap">
+                <img
+                  src={getCourseImage(data.thumbnail_url, data.slug)}
+                  alt={data.title}
+                  onError={(event) => useCourseImageError(event, data.slug)}
+                />
+                {loading && <span className="course-sync-pill">Syncing price</span>}
+              </div>
+              <div className="course-focus-price-row">
+                <div>
+                  <span>Program price</span>
+                  <strong>₹{data.price.toLocaleString('en-IN')}</strong>
+                  {data.original_price && (
+                    <small>₹{Number(data.original_price).toLocaleString('en-IN')}</small>
+                  )}
+                </div>
+                <button className="btn btn-primary" onClick={handleEnroll}>
+                  <FaLock /> Enroll Now
+                </button>
+              </div>
+            </aside>
           </div>
         </div>
       </section>
 
-      <section className="section" style={{ background: 'var(--bg-secondary)' }}>
+      <section className="course-related-strip">
         <div className="container">
-          <div className="section-title">
-            <h2>Related <span className="gradient-text">Source-Backed</span> Options</h2>
-          </div>
-          <div className="grid grid-3">
+          <div className="course-related-inline">
             {relatedCourses.map((course) => (
-              <Link key={course.slug} to={`/courses/${course.slug}`} className="card" style={{ padding: 22, textDecoration: 'none' }}>
-                <div className="badge badge-primary" style={{ marginBottom: 12 }}>{course.category_name}</div>
-                <h4 style={{ marginBottom: 10 }}>{course.title}</h4>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>{course.short_description}</p>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 16, color: 'var(--blue-300)', fontWeight: 700 }}>
+              <Link key={course.slug} to={`/courses/${course.slug}`} className="course-related-pill">
+                <span>{course.category_name || 'Course'}</span>
+                <strong>{course.title}</strong>
+                <small>₹{Number(course.price).toLocaleString('en-IN')}</small>
+                <em>
                   View <FaArrowRight />
-                </span>
+                </em>
               </Link>
             ))}
           </div>
