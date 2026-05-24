@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }) => {
       toast.success('Login successful!');
       return { success: true, user: userData };
     } catch (error) {
-      const message = error.response?.data?.message || 'Login failed';
+      const message = error.response?.data?.message || error.response?.data?.error || 'Login failed';
       toast.error(message);
       return { success: false, error: message };
     }
@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }) => {
       toast.success('Registration successful!');
       return { success: true, user: newUser };
     } catch (error) {
-      const message = error.response?.data?.message || 'Registration failed';
+      const message = error.response?.data?.message || error.response?.data?.error || 'Registration failed';
       toast.error(message);
       return { success: false, error: message };
     }
@@ -93,7 +93,7 @@ export const AuthProvider = ({ children }) => {
       toast.success('Login successful!');
       return { success: true, user: userData };
     } catch (error) {
-      const message = error.response?.data?.message || 'Google login failed';
+      const message = error.response?.data?.message || error.response?.data?.error || 'Google login failed';
       toast.error(message);
       return { success: false, error: message };
     }
@@ -119,7 +119,7 @@ export const AuthProvider = ({ children }) => {
       toast.success('Profile updated!');
       return { success: true, user: updatedUser };
     } catch (error) {
-      const message = error.response?.data?.message || 'Profile update failed';
+      const message = error.response?.data?.message || error.response?.data?.error || 'Profile update failed';
       toast.error(message);
       return { success: false, error: message };
     }
