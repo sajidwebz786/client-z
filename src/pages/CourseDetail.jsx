@@ -82,19 +82,34 @@ const CourseDetail = () => {
       navigate('/login');
       return;
     }
+    if (!data.id) {
+      toast.error('Course is still syncing. Please try again in a moment.');
+      return;
+    }
     try {
       const orderRes = await api.post('/payments/create-order', { courseId: data.id });
+      if (orderRes.data.testMode || !window.Razorpay) {
+        await api.post('/payments/verify', {
+          razorpay_order_id: orderRes.data.orderId,
+          razorpay_payment_id: `test_payment_${Date.now()}`,
+          courseId: data.id,
+        });
+        toast.success('Enrolled!');
+        navigate('/courses');
+        return;
+      }
+
       new window.Razorpay({
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-        amount: data.price * 100,
-        currency: 'INR',
+        key: orderRes.data.keyId || import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: orderRes.data.amount,
+        currency: orderRes.data.currency || 'INR',
         name: 'Zulanex',
         description: data.title,
         order_id: orderRes.data.orderId,
         handler: async (r) => {
           await api.post('/payments/verify', { ...r, courseId: data.id });
           toast.success('Enrolled!');
-          navigate('/dashboard');
+          navigate('/courses');
         },
         theme: { color: '#0072ce' },
       }).open();
